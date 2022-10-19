@@ -1,0 +1,22 @@
+h1, h2, h3  {
+  font-family: $font-family-main;
+  color: $title;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+h1 {
+  font-size: $font-size-h1;
+}
+
+h2, h3 {
+  font-size: $font-size-h2;
+}
+
+p {
+  font-family: $font-family-main;
+  color: $text;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
