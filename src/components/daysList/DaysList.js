@@ -13,25 +13,30 @@ import { ListItemButton } from '@mui/material';
 const {Provider} = DataContext;
 
 const DaysList = () => {
-  const [open, setOpen] = useState(false);
+  const [openList, setOpen] = useState([false, false, false]);
   const context = useContext(DataContext);
 
 
-  const handleClick = () => {
-    setOpen(open => !open)
+  const handleClick = (i) => {
+    const newOpenList = [...openList]
+    newOpenList[i] = !newOpenList[i];
+    setOpen(openList => [...newOpenList])
   }
 
   const items = context.toDoListState.map((item, i) => {
     return (
       <Provider key={i} value={item.tasks} >
-        <ListItem>
+        <ListItem style={{flexDirection: 'column'}}>
           <div className="todo-item__top">
-            <ListItemText component={'h2'} className="days-list-item__title">{item.date}</ListItemText>
-            <ListItemButton className="days-list-item__down" onClick={handleClick}>Down</ListItemButton>
+            <ListItemText component='h2' className="days-list-item__title">{item.date}</ListItemText>
+            {i === 0 ? null : <ListItemButton className="days-list-item__down" onClick={() => handleClick(i)}>Down</ListItemButton>}
           </div>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <TodoList className={open ? 'open' : ''}/>
-          </Collapse>
+          {i === 0 ? 
+            <TodoList className='open today'/> : 
+            <Collapse in={openList[i]} timeout="auto" unmountOnExit>
+              <TodoList className={openList[i] ? 'open' : ''}/>
+            </Collapse>
+          }
         </ListItem>
       </Provider>
     )
